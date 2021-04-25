@@ -377,7 +377,7 @@ class Resnet50CtlBenchmarkBase(CtlBenchmark):
     """Test Keras model with XLA and 2 GPU with automatic mixed precision."""
     self._setup()
 
-    FLAGS.num_gpus = 1
+    FLAGS.num_gpus = 2
     FLAGS.distribution_strategy = 'mirrored'
     FLAGS.model_dir = self._get_model_dir('benchmark_xla_2_gpu_amp')
     FLAGS.batch_size = 256 * 2
@@ -390,7 +390,7 @@ class Resnet50CtlBenchmarkBase(CtlBenchmark):
     """Test Keras model with XLA and 4 GPU with automatic mixed precision."""
     self._setup()
 
-    FLAGS.num_gpus = 1
+    FLAGS.num_gpus = 4
     FLAGS.distribution_strategy = 'mirrored'
     FLAGS.model_dir = self._get_model_dir('benchmark_xla_4_gpu_amp')
     FLAGS.batch_size = 256 * 4
