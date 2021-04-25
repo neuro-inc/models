@@ -303,6 +303,102 @@ class Resnet50CtlBenchmarkBase(CtlBenchmark):
     FLAGS.single_l2_loss_op = True
     self._run_and_report_benchmark()
 
+  def benchmark_2_gpu(self):
+    """Test Keras model with 2 GPU."""
+    self._setup()
+
+    FLAGS.num_gpus = 2
+    FLAGS.distribution_strategy = 'mirrored'
+    FLAGS.model_dir = self._get_model_dir('benchmark_2_gpu')
+    FLAGS.batch_size = 128 * 2
+    self._run_and_report_benchmark()
+
+  def benchmark_4_gpu(self):
+    """Test Keras model with 4 GPU."""
+    self._setup()
+
+    FLAGS.num_gpus = 4
+    FLAGS.distribution_strategy = 'mirrored'
+    FLAGS.model_dir = self._get_model_dir('benchmark_4_gpu')
+    FLAGS.batch_size = 128 * 4
+    self._run_and_report_benchmark()
+
+  def benchmark_2_gpu_amp(self):
+    """Test Keras model with 2 GPU with automatic mixed precision."""
+    self._setup()
+
+    FLAGS.num_gpus = 2
+    FLAGS.distribution_strategy = 'mirrored'
+    FLAGS.model_dir = self._get_model_dir('benchmark_2_gpu_amp')
+    FLAGS.batch_size = 256 * 2
+    FLAGS.dtype = 'fp16'
+    FLAGS.fp16_implementation = 'graph_rewrite'
+    self._run_and_report_benchmark()
+
+  def benchmark_4_gpu_amp(self):
+    """Test Keras model with 4 GPU with automatic mixed precision."""
+    self._setup()
+
+    FLAGS.num_gpus = 4
+    FLAGS.distribution_strategy = 'mirrored'
+    FLAGS.model_dir = self._get_model_dir('benchmark_4_gpu_amp')
+    FLAGS.batch_size = 256 * 4
+    FLAGS.dtype = 'fp16'
+    FLAGS.fp16_implementation = 'graph_rewrite'
+    self._run_and_report_benchmark()
+
+  def benchmark_2_gpu_eager(self):
+    """Test Keras model with 2 GPU in pure eager mode."""
+    self._setup()
+
+    FLAGS.num_gpus = 2
+    FLAGS.distribution_strategy = 'mirrored'
+    FLAGS.model_dir = self._get_model_dir('benchmark_2_gpu_eager')
+    FLAGS.batch_size = 120 * 2
+    FLAGS.use_tf_function = False
+    FLAGS.use_tf_while_loop = False
+    FLAGS.single_l2_loss_op = True
+    self._run_and_report_benchmark()
+
+  def benchmark_4_gpu_eager(self):
+    """Test Keras model with 4 GPU in pure eager mode."""
+    self._setup()
+
+    FLAGS.num_gpus = 4
+    FLAGS.distribution_strategy = 'mirrored'
+    FLAGS.model_dir = self._get_model_dir('benchmark_4_gpu_eager')
+    FLAGS.batch_size = 120 * 4
+    FLAGS.use_tf_function = False
+    FLAGS.use_tf_while_loop = False
+    FLAGS.single_l2_loss_op = True
+    self._run_and_report_benchmark()
+
+  def benchmark_xla_2_gpu_amp(self):
+    """Test Keras model with XLA and 2 GPU with automatic mixed precision."""
+    self._setup()
+
+    FLAGS.num_gpus = 1
+    FLAGS.distribution_strategy = 'mirrored'
+    FLAGS.model_dir = self._get_model_dir('benchmark_xla_2_gpu_amp')
+    FLAGS.batch_size = 256 * 2
+    FLAGS.dtype = 'fp16'
+    FLAGS.fp16_implementation = 'graph_rewrite'
+    FLAGS.enable_xla = True
+    self._run_and_report_benchmark()
+
+  def benchmark_xla_4_gpu_amp(self):
+    """Test Keras model with XLA and 4 GPU with automatic mixed precision."""
+    self._setup()
+
+    FLAGS.num_gpus = 1
+    FLAGS.distribution_strategy = 'mirrored'
+    FLAGS.model_dir = self._get_model_dir('benchmark_xla_4_gpu_amp')
+    FLAGS.batch_size = 256 * 4
+    FLAGS.dtype = 'fp16'
+    FLAGS.fp16_implementation = 'graph_rewrite'
+    FLAGS.enable_xla = True
+    self._run_and_report_benchmark()
+
   def benchmark_8_gpu(self):
     """Test Keras model with 8 GPUs."""
     self._setup()

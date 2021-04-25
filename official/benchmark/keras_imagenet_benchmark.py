@@ -924,6 +924,28 @@ class Resnet50KerasBenchmarkBase(keras_benchmark.KerasBenchmark):
     FLAGS.loss_scale = 'dynamic'
     self._run_and_report_benchmark()
 
+  def benchmark_2_gpu_no_dist_strat(self):
+    """Test Keras model with 2 GPU, no distribution strategy."""
+    self._setup()
+
+    FLAGS.num_gpus = 2
+    FLAGS.enable_eager = True
+    FLAGS.distribution_strategy = 'off'
+    FLAGS.model_dir = self._get_model_dir('benchmark_2_gpu_no_dist_strat')
+    FLAGS.batch_size = 128 * 2
+    self._run_and_report_benchmark()
+
+  def benchmark_4_gpu_no_dist_strat(self):
+    """Test Keras model with 4 GPU, no distribution strategy."""
+    self._setup()
+
+    FLAGS.num_gpus = 4
+    FLAGS.enable_eager = True
+    FLAGS.distribution_strategy = 'off'
+    FLAGS.model_dir = self._get_model_dir('benchmark_4_gpu_no_dist_strat')
+    FLAGS.batch_size = 128 * 4
+    self._run_and_report_benchmark()
+
   def benchmark_8_gpu(self):
     """Test Keras model with 8 GPUs."""
     self._setup()

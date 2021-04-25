@@ -479,6 +479,11 @@ class NCFKerasSynth(NCFKerasBenchmarkBase):
     FLAGS.num_gpus = 2
     self._run_and_report_benchmark()
 
+  def benchmark_4_gpus(self):
+    self._setup()
+    FLAGS.num_gpus = 4
+    self._run_and_report_benchmark()
+
 
 if __name__ == '__main__':
   tf.test.main()
